@@ -1,0 +1,40 @@
+services:
+    lilinen_decor.factory:
+        abstract: true
+        class: LiLinen\Decor\DecorationFactory
+        arguments:
+            $decorator: '@lilinen_decor.service'
+
+    lilinen_decor.service:
+        class: LiLinen\Decor\DecorationService
+        public: true
+        arguments:
+            - '@lilinen_decor.reader'
+            - '@lilinen_decor.factory.instance'
+            - '@lilinen_decor.factory.proxy'
+
+    lilinen_decor.reader:
+        alias: '@lilinen_decor.reader.annotation'
+
+    lilinen_decor.reader.annotation:
+        class: LiLinen\Decor\Reader\AnnotationReader
+        arguments:
+            - '@lilinen_decor.reader.annotation.doctrine'
+
+    lilinen_decor.reader.annotation.doctrine:
+        class: Doctrine\Common\Annotations\AnnotationReader
+
+    lilinen_decor.factory.instance:
+        class: LiLinen\Decor\Factory\InstanceFactory
+
+    lilinen_decor.factory.proxy:
+        class: LiLinen\Decor\Factory\ProxyFactory
+        arguments:
+            - '@lilinen_decor.factory.proxy.smart_reference'
+            - '@lilinen_decor.decoration.collection'
+
+    lilinen_decor.factory.proxy.smart_reference:
+        class: ProxyManager\Factory\AccessInterceptorValueHolderFactory
+
+    lilinen_decor.decoration.collection:
+        class: LiLinen\Decor\Decorator\DecoratorCollection
