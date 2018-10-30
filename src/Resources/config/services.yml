@@ -14,7 +14,7 @@ services:
             - '@lilinen_decor.factory.proxy'
 
     lilinen_decor.reader:
-        alias: '@lilinen_decor.reader.annotation'
+        alias: 'lilinen_decor.reader.annotation'
 
     lilinen_decor.reader.annotation:
         class: LiLinen\Decor\Reader\AnnotationReader
