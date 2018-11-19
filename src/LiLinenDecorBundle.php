@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LiLinen\DecorBundle;
 
+use LiLinen\DecorBundle\DependencyInjection\Compiler\DecoratedServicePass;
 use LiLinen\DecorBundle\DependencyInjection\Compiler\DecoratorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -18,5 +19,6 @@ class LiLinenDecorBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new DecoratorPass());
+        $container->addCompilerPass(new DecoratedServicePass());
     }
 }

@@ -13,6 +13,9 @@ class DecoratorPass implements CompilerPassInterface
     private const COLLECTION = 'lilinen_decor.decoration.collection';
     private const TAG = 'lilinen_decor.decorator';
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         if ($container->has(self::COLLECTION) === false) {
@@ -22,6 +25,7 @@ class DecoratorPass implements CompilerPassInterface
         $definition = $container->findDefinition(self::COLLECTION);
 
         $taggedServices = $container->findTaggedServiceIds(self::TAG);
+
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall('addDecorator', [new Reference($id)]);
         }

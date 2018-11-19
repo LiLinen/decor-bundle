@@ -38,3 +38,14 @@ services:
 
     lilinen_decor.decoration.collection:
         class: LiLinen\Decor\Decorator\DecoratorCollection
+
+    lilinen_decor.decorator.memoize:
+        class: LiLinen\Decor\Decorator\MemoizeDecorator
+        arguments:
+            - '@lilinen_decor.decorator.memoize.cache'
+            - '@lilinen_decor.decorator.memoize.key_maker'
+    lilinen_decor.decorator.memoize.cache:
+        class: Symfony\Component\Cache\Simple\ArrayCache
+
+    lilinen_decor.decorator.memoize.key_maker:
+        class: LiLinen\Decor\Decorator\Memoize\KeyMaker
