@@ -1,5 +1,7 @@
 # Decor bundle
 
+[![Build Status](https://travis-ci.org/LiLinen/decor-bundle.svg?branch=master)](https://travis-ci.org/LiLinen/decor-bundle)
+
 Symfony bundle for LiLinen/Decor library
 
 ## Installation
