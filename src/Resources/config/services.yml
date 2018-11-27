@@ -44,6 +44,9 @@ services:
         arguments:
             - '@lilinen_decor.decorator.memoize.cache'
             - '@lilinen_decor.decorator.memoize.key_maker'
+        tags:
+            - { name: lilinen_decor.decorator}
+
     lilinen_decor.decorator.memoize.cache:
         class: Symfony\Component\Cache\Simple\ArrayCache
 

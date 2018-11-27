@@ -2,9 +2,10 @@
 
 namespace LiLinen\DecorBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 class DecoratedServicePass implements CompilerPassInterface
 {
@@ -22,23 +23,21 @@ class DecoratedServicePass implements CompilerPassInterface
             return;
         }
 
-        $abstractFactory = $container->findDefinition(self::FACTORY);
-
         $decoratedServices = $container->findTaggedServiceIds(self::TAG);
 
         foreach ($decoratedServices as $id => $tags) {
             $service = $container->findDefinition($id);
 
-            $serviceFactory = (new Definition())
-                ->setClass($abstractFactory->getClass())
-                ->setArguments([
-                    self::SERVICE_ARG, $abstractFactory->getArgument(self::SERVICE_ARG),
-                    self::CLASS_ARG, $service->getClass(),
-                ]);
+            $serviceFactoryName = self::FACTORY . '.' . $service->getClass();
 
-            $container->setDefinition(self::FACTORY . '.' . $service->getClass(), $serviceFactory);
+            $serviceFactory = (new ChildDefinition(self::FACTORY))
+                ->setAutowired(true)
+                ->setPublic(false)
+                ->setArgument('$class', $service->getClass());
 
-            $service->setFactory($serviceFactory);
+            $container->setDefinition($serviceFactoryName, $serviceFactory);
+
+            $service->setFactory([new Reference($serviceFactoryName), 'create']);
         }
     }
 }
