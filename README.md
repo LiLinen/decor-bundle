@@ -21,7 +21,6 @@ return [
 
 ### Decorating a service
 
-
 ```php
 <?php
 // src/Service/MyService.php
@@ -42,7 +41,7 @@ class MyService
 }
 ```
 
-To automatically decorate the service:
+To automatically decorate the service with the `decorated` tag:
 ```yaml
 # config/services.yml
 services:
