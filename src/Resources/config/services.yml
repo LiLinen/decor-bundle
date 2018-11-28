@@ -52,3 +52,10 @@ services:
 
     lilinen_decor.decorator.memoize.key_maker:
         class: LiLinen\Decor\Decorator\Memoize\KeyMaker
+
+    lilinen_decor.decorator.profile:
+        class: LiLinen\Decor\Decorator\ProfileDecorator
+        arguments:
+            - '@logger'
+        tags:
+            - { name: lilinen_decor.decorator}
